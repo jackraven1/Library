@@ -1,6 +1,7 @@
 package se.lexicon.library.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -14,10 +15,11 @@ public class AppUser {
     @Column(nullable = false, length = 50)
     private String password;
     @Column
+    @CreationTimestamp
     private LocalDate regDate;
 
     @OneToOne
-    @JoinColumn(name = "idda")
+    @JoinColumn
     private Details userDetails;
 
     protected AppUser() {
@@ -25,7 +27,6 @@ public class AppUser {
     public AppUser(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.regDate = LocalDate.parse(regDate.toString());
     }
 
     public int getId() {
