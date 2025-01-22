@@ -2,6 +2,8 @@ package se.lexicon.library.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Book {
     @Id
@@ -13,6 +15,9 @@ public class Book {
     private String title;
     @Column(nullable=false)
     private int maxLoanDays;
+
+    @ManyToMany(mappedBy = "writtenBooks")
+    private Set<Author> authors;
 
     protected Book() {
     }
