@@ -2,6 +2,7 @@ package se.lexicon.library.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class Book {
     private int maxLoanDays;
 
     @ManyToMany(mappedBy = "writtenBooks")
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     protected Book() {
     }
@@ -30,6 +31,10 @@ public class Book {
 
     public int getId() {
         return id;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
     }
 
     public String getIsbn() {
@@ -68,5 +73,9 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", maxLoanDays=" + maxLoanDays +
                 '}';
+    }
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+        author.addWrittenBook(this);
     }
 }

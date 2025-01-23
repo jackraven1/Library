@@ -2,6 +2,7 @@ package se.lexicon.library.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class Author {
             joinColumns = @JoinColumn(name ="author_id"),
             inverseJoinColumns = @JoinColumn(name ="book_id")
     )
-    private Set<Book> writtenBooks;
+    private Set<Book> writtenBooks = new HashSet<>();
 
     protected Author() {
     }
@@ -29,7 +30,7 @@ public class Author {
     public Author(String firstName, String lastName, Set<Book> writtenBooks) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.writtenBooks = writtenBooks;
+        this.writtenBooks = new HashSet<>();
     }
 
     public int getId() {
@@ -58,5 +59,9 @@ public class Author {
 
     public void setWrittenBooks(Set<Book> writtenBooks) {
         this.writtenBooks = writtenBooks;
+    }
+    public void addWrittenBook(Book book) {
+        this.writtenBooks.add(book);
+        book.getAuthors().add(this);
     }
 }

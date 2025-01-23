@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class AppUser {
@@ -17,6 +18,8 @@ public class AppUser {
     @Column
     @CreationTimestamp
     private LocalDate regDate;
+    @OneToMany(mappedBy = "borrower")
+    private List<BookLoan> bookLoanList;
 
     @OneToOne
     @JoinColumn
@@ -24,9 +27,10 @@ public class AppUser {
 
     protected AppUser() {
     }
-    public AppUser(String userName, String password) {
+    public AppUser(String userName, String password, List<BookLoan> bookLoanList) {
         this.userName = userName;
         this.password = password;
+        this.bookLoanList = bookLoanList;
     }
 
     public int getId() {
@@ -73,6 +77,10 @@ public class AppUser {
                 ", regDate=" + regDate +
                 ", userDetails=" + userDetails +
                 '}';
+    }
+    public void addBookLoan(BookLoan bookLoan) {
+        bookLoanList.add(bookLoan);
+        bookLoan.setBorrower(this);
     }
 
 }

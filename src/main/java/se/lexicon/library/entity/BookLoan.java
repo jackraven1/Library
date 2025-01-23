@@ -32,6 +32,12 @@ public class BookLoan {
         this.book = book;
     }
 
+    public BookLoan(LocalDate loanDate, LocalDate dueDate, Boolean returned) {
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.returned = returned;
+    }
+
     public Book getBook() {
         return book;
     }
